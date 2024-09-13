@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cloudflare Pages 文件列表</title>
+  <style>
+    body {
+      font-family: sans-serif;
+    }
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    li {
+      margin-bottom: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Cloudflare Pages 文件列表</h1>
+  <ul>
+    <%- files.map(file => `<li>${file}</li>`).join('') %>
+  </ul>
+</body>
+</html>
