@@ -1,21 +1,58 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Cloudflare Pages 文件列表</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>File List</title>
   <style>
     body {
-      font-family: sans-serif;
+      font-family: Arial, sans-serif;
+      padding: 20px;
     }
     ul {
       list-style-type: none;
       padding: 0;
     }
     li {
-      margin-bottom: 5px;
+      margin: 5px 0;
+    }
+    a {
+      text-decoration: none;
+      color: #007bff;
+    }
+    a:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
-Hello World!
+  <h1>File List</h1>
+  <ul id="file-list"></ul>
+
+  <script>
+    async function fetchFileList() {
+      try {
+        const response = await fetch('https://file-up.afo.im/list');
+        if (!response.ok) {
+          throw new Error('Failed to fetch file list');
+        }
+        const fileList = await response.text();
+        const files = fileList.split('\n').filter(file => file.trim() !== '');
+        displayFiles(files);
+      } catch (error) {
+        console.error('Error fetching file list:', error);
+        document.getElementById('file-list').innerHTML = '<li>Error fetching file list</li>';
+      }
+    }
+
+    function displayFiles(files) {
+      const fileListElement = document.getElementById('file-list');
+      fileListElement.innerHTML = files.map(file => 
+        `<li><a href="/file/${encodeURIComponent(file)}">${file}</a></li>`
+      ).join('');
+    }
+
+    fetchFileList();
+  </script>
 </body>
 </html>
